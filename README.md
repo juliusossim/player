@@ -1,2 +1,3 @@
-# player
-Created with CodeSandbox
+# Radio player
+
+Web radio player created in reactjs
