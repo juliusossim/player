@@ -17,6 +17,7 @@
     "audiomotion-analyzer": "^3.6.0",
     "font-awesome": "^4.7.0",
     "moment": "^2.29.3",
+    "radio-browser-api": "^6.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.1",
@@ -48,7 +49,6 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {},
   "keywords": [
     "player",
     "reactjs",
