@@ -1,9 +1,9 @@
-import { RadioBrowserApi, StationSearchType } from 'radio-browser-api'
-import { useCallback, useEffect, useState } from 'react';
+import { RadioBrowserApi, StationSearchType } from 'radio-browser-api';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 type RadioProps = {
-  param?: { [key: string]: string | number }
-}
+  [key: string]: string | number;
+};
 
 const defaultCode = 'US';
 type DefaultParamsType = {
@@ -12,40 +12,37 @@ type DefaultParamsType = {
   offset?: number;
 } & RadioProps;
 
-const defaultParams: DefaultParamsType = { countryCode: defaultCode, limit: 10, offset: 0  }
+const defaultParams: DefaultParamsType = {
+  countryCode: defaultCode,
+  limit: 10,
+  offset: 0,
+};
 
-export const useRadio = (params = defaultParams) => {
+export const useRadio = (params: DefaultParamsType) => {
+  params = { ...defaultParams, ...params };
+  const [stations, setStations] = useState<{ [key: string]: string | any }[]>([]);
+  const api = useMemo(() => new RadioBrowserApi('My Radio App'), []);
 
-    type StationType = { [key: string]: string | any }
+  const countryStations = useCallback(async () => {
+    try {
+      const results: { [key: string]: string | any }[] = await api.searchStations(params);
+      setStations(results);
+      return results;
+    } catch (e) {
+      console.log(e);
+    }
+  }, [params]);
 
-    const [stations, setStations] = useState<Array<{[key: string]: string | any}>>([]);
+  useEffect(() => {
+    countryStations();
 
- const api = new RadioBrowserApi('My Radio App')
+    return () => {
+      console.log(stations);
+    };
+  }, []);
 
-    const countrySations = async () => {
-      try {
-       console.log(params.countryCode)
-       const results: StationType[] = await api.searchStations({
-         ...params
-       })
-       setStations(results)
-       return results;
-      }
-      catch(e){
-       console.log(e)
-      }
-}
-    useEffect(() => {
-      countrySations()
-    
-      return () => {
-        console.log(stations);
-      }
-    }, [params])
-    
-
-    
-    return ({
-        stations, setStations
-    })
-}
+  return {
+    stations,
+    setStations,
+  };
+};
