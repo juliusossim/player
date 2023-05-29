@@ -1,1 +1,1 @@
-declare module 'radio-browser'
+declare module 'radio-browser';

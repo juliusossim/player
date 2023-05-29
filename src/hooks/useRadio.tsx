@@ -31,7 +31,7 @@ export const useRadio = (params: DefaultParamsType) => {
     } catch (e) {
       console.log(e);
     }
-  }, [params]);
+  }, [api, params]);
 
   useEffect(() => {
     countryStations();
@@ -39,7 +39,7 @@ export const useRadio = (params: DefaultParamsType) => {
     return () => {
       console.log(stations);
     };
-  }, []);
+  });
 
   return {
     stations,
