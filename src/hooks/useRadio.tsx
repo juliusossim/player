@@ -15,7 +15,7 @@ type DefaultParamsType = {
 const defaultParams: DefaultParamsType = {
   countryCode: defaultCode,
   limit: 10,
-  offset: 0,
+  offset: 10,
 };
 
 export const useRadio = (params: DefaultParamsType) => {
